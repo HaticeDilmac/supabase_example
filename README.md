@@ -25,9 +25,9 @@ A simple and beautiful **Task Manager App** built using **Flutter** and **Supaba
 ---
 
 ## Screenshots
-<img width="280" alt="calculator" src="https://github.com/user-attachments/assets/aa9e7716-b91a-4d87-b076-be815a07c1b3">   
 <img width="280" alt="calculator" src="https://github.com/user-attachments/assets/57b738b0-2585-4a48-a4d6-87fb168789cd">   
-<img width="280" alt="calculator" src="https://github.com/user-attachments/assets/aa9e7716-b91a-4d87-b076-be815a07c1b3">    
+<img width="280" alt="calculator" src="https://github.com/user-attachments/assets/2a2e0295-a053-47fd-b977-ef1cc99f7625">   
+<img width="280" alt="calculator" src="https://github.com/user-attachments/assets/aa9e7716-b91a-4d87-b076-be815a07c1b3">   
 
 
 
