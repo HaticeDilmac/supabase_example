@@ -41,10 +41,16 @@ class _TaskPageState extends State<TaskPage> {
         return;
       }
 
+      // await Supabase.instance.client.from('notes').insert({
+      //   'body': _taskController.text,
+      //   'user_id': userId,
+      // });
       final response = await Supabase.instance.client.from('notes').insert({
         'body': _taskController.text,
         'user_id': userId,
       });
+
+      print('Insert successful: $response');
 
       setState(() {
         _successMessage = 'Task added successfully!';
@@ -73,30 +79,115 @@ class _TaskPageState extends State<TaskPage> {
 
   Future<void> _deleteTask(dynamic taskId) async {
     try {
-      await Supabase.instance.client.from('notes').delete().eq('id', taskId);
+      print('=== DELETE TASK DEBUG ===');
+      print('Deleting task with ID: $taskId (Type: ${taskId.runtimeType})');
+
+      // Check if user is authenticated
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      print('Current user ID: $userId');
+
+      if (userId == null) {
+        throw Exception('User not authenticated');
+      }
+
+      // First, let's check if the task exists
+      print('Checking if task exists...');
+      final existingTask =
+          await Supabase.instance.client
+              .from('notes')
+              .select()
+              .eq('id', taskId)
+              .eq('user_id', userId)
+              .single();
+
+      print('Existing task: $existingTask');
+
+      // Delete the task
+      print('Attempting to delete task...');
+      final response = await Supabase.instance.client
+          .from('notes')
+          .delete()
+          .eq('id', taskId)
+          .eq('user_id', userId);
+
+      print('Delete response: $response');
+      print('=== DELETE COMPLETE ===');
+
+      // Show success message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Task deleted successfully!'),
+            backgroundColor: Colors.green[600],
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+
+        // Force refresh the task list
+        setState(() {});
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error deleting task: ${e.toString()}'),
-          backgroundColor: Colors.red[600],
-        ),
-      );
+      print('=== DELETE ERROR ===');
+      print('Delete error: $e');
+      print('Error type: ${e.runtimeType}');
+      print('=====================');
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error deleting task: ${e.toString()}'),
+            backgroundColor: Colors.red[600],
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
     }
   }
 
   Future<void> _toggleTaskStatus(dynamic taskId, bool isCompleted) async {
     try {
-      await Supabase.instance.client
+      print('Toggling task status - ID: $taskId, Current: $isCompleted');
+
+      // Check if user is authenticated
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      if (userId == null) {
+        throw Exception('User not authenticated');
+      }
+
+      // Update the task status
+      final response = await Supabase.instance.client
           .from('notes')
           .update({'is_completed': !isCompleted})
-          .eq('id', taskId);
+          .eq('id', taskId)
+          .eq('user_id', userId); // Ensure user can only update their own tasks
+
+      print('Toggle response: $response');
+
+      // Show success message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Task status updated!'),
+            backgroundColor: Colors.blue[600],
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(seconds: 2),
+          ),
+        );
+
+        // Force refresh the task list
+        setState(() {});
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error updating task: ${e.toString()}'),
-          backgroundColor: Colors.red[600],
-        ),
-      );
+      print('Toggle error: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error updating task: ${e.toString()}'),
+            backgroundColor: Colors.red[600],
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
     }
   }
 
@@ -404,6 +495,23 @@ class _TaskPageState extends State<TaskPage> {
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF2d3748),
                       ),
+                    ),
+                    Spacer(),
+                    // Debug button to refresh tasks
+                    IconButton(
+                      onPressed: () {
+                        setState(() {}); // Force refresh
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Tasks refreshed!'),
+                            backgroundColor: Colors.blue[600],
+                            behavior: SnackBarBehavior.floating,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.refresh, color: Color(0xFF667eea)),
+                      tooltip: 'Refresh Tasks',
                     ),
                   ],
                 ),
