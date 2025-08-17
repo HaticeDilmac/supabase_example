@@ -1,4 +1,4 @@
-<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 16 Pro - 2025-08-17 at 16 57 36" src="https://github.com/user-attachments/assets/2fee7cf9-6a21-4724-aab2-d5e21a5198c1" /># Supabase Task Manager App
+# Supabase Task Manager App
 
 A simple and beautiful **Task Manager App** built using **Flutter** and **Supabase**. This app allows users to register, log in, and manage their tasks securely using Supabase's **Row Level Security (RLS)** and real-time data sync.
 
@@ -25,7 +25,11 @@ A simple and beautiful **Task Manager App** built using **Flutter** and **Supaba
 ---
 
 ## Screenshots
-<img width="280" alt="calculator" src="https://github.com/user-attachments/assets/aa9e7716-b91a-4d87-b076-be815a07c1b3">     
+<img width="280" alt="calculator" src="https://github.com/user-attachments/assets/aa9e7716-b91a-4d87-b076-be815a07c1b3">   
+<img width="280" alt="calculator" src="https://github.com/user-attachments/assets/57b738b0-2585-4a48-a4d6-87fb168789cd">   
+<img width="280" alt="calculator" src="https://github.com/user-attachments/assets/aa9e7716-b91a-4d87-b076-be815a07c1b3">    
+
+
 
 ---
 
