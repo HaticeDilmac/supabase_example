@@ -345,7 +345,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                                           ),
                                         )
                                         : Text(
-                                          _isSignUp ? 'Kayıt Ol' : 'Giriş Yap',
+                                          _isSignUp ? 'Sign Up' : 'Sign In',
                                           style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600,
