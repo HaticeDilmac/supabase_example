@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'auth/auto_gate.dart';
+import 'config/supabase_config.dart';
 
 void main() async {
-  //supabase setup
+  // Supabase setup - security config
   await Supabase.initialize(
-    url: 'https://snwlxryhvuqmzjyvpjqt.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNud2x4cnlodnVxbXpqeXZwanF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzNDQ5NDgsImV4cCI6MjA3MDkyMDk0OH0.Uv3VomxUHWTJETwQFsonbXMhcQ8oNca9G0YAEmXOIqE',
+    url: SupabaseConfig.url,
+    anonKey: SupabaseConfig.anonKey,
   );
   runApp(const MyApp());
 }
