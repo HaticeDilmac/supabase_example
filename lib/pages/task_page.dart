@@ -1,3 +1,6 @@
+// ignore_for_file: avoid_print
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -50,7 +53,9 @@ class _TaskPageState extends State<TaskPage> {
         'user_id': userId,
       });
 
-      print('Insert successful: $response');
+      if (kDebugMode) {
+        print('Insert successful: $response');
+      }
 
       setState(() {
         _successMessage = 'Task added successfully!';
